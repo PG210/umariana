@@ -1,0 +1,108 @@
+/** Background **/
+.back_g {
+    background-image: linear-gradient(to right top, #27128b, #002383, #27128b, #002383, #27128b, #002383, #27128b, #002383, #27128b, #002383, #27128b, #002383);
+}
+
+/** Fomulario de ingreso y registro. **/
+.card_wh {border-radius: 35px; width: 370px; height: min-content; }
+
+.card_wh1 {
+    background-color: rgb(4, 96, 182); border-radius: 12%; box-shadow: 0 0 9px rgb(1, 87, 168); padding: 4px; width: 378px;
+}
+
+.card_wh2 {border-radius: 35px; height: min-content; width: 350px; }
+
+#img_wh2 { width: 100px;  filter: drop-shadow(0 2px 2px rgba(0, 16, 70, 0.61)); }
+
+.card_wh3 { 
+    background-color: rgb(4, 96, 182); border-radius: 14%; box-shadow: 0 0 9px rgb(1, 87, 168); padding: 4px; width: 358px;
+}
+
+.blob { position: fixed; z-index: 0; top: 0; left: 0; fill: #023F92; width: 40vmax; height: fit-content; animation: move 50s ease-in-out infinite; transform-origin: 50% 50%; }
+  
+@keyframes move {
+    0%   { transform: scale(1)   translate(10px, -30px); }
+    38%  { transform: scale(0.8, 1) translate(80vw, 30vh) rotate(160deg); }
+    40%  { transform: scale(0.8, 1) translate(80vw, 30vh) rotate(160deg); }
+    78%  { transform: scale(1.3) translate(0vw, 50vh) rotate(-20deg); }
+    80%  { transform: scale(1.3) translate(0vw, 50vh) rotate(-20deg); }
+    100% { transform: scale(1)   translate(10px, -30px); }
+}
+
+.card_wh1:hover { box-shadow: 0 0 0px; background-color: #0246ff; }
+
+.card_wh:hover { box-shadow: 0 0 9px #414346f1; }
+
+#img_lg { width: 200px;}
+
+.btn_m { margin-bottom: -18px;}
+
+
+/** Modal recuperación contraseña y confirmación de correo 'code' **/
+
+.modal_1 { border-radius: 30px; }
+
+#correo { font-size: 13px;}
+
+#btn_re { margin-left: -5px;  margin-bottom: 22px;  padding: 16px 10px;}
+
+#btn_co { position: relative; z-index: 1;}
+
+.p1 { margin-left: -2px; }
+
+.c1 { margin-right: -10px; }
+
+.c2 { width: 310px; }
+
+#img_re { width: 50px; }
+
+.p2 { font-size: 16px; }
+
+.rw_code { margin-left: 17px; margin-bottom: 3px; }
+
+.dv_code { margin-right: -20px; width: 100px; }
+
+.code {  font-size: 30px; font-weight: bold; text-align: center; border: 1px solid #ff5757; }
+
+#btn_va { background-color: rgb(0,79,155); padding: 18px 10px; }
+
+#m_s { border-radius: 30px; border: 2px solid rgb(254, 236, 133); padding: 5px 0px; width: 70px; text-align: center; transform: rotate(0deg); }
+
+#m_s::before { content: ""; position: absolute; box-sizing: border-box; inset: -5px; width: 75px; height: 40px; border-radius: 30px; border: 6px solid rgba(254, 236, 133, 0.795); }
+
+#m_s::after { content: ""; position: absolute; box-sizing: border-box; inset: -5px; width: 75px; height: 40px; border-radius: 30px; border: 6px solid rgb(255, 191, 1); animation: prixClipFix 119s linear; }
+
+@keyframes prixClipFix {
+    0% { clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0); }
+
+    25% { clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);}
+
+    50% { clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%); }
+
+    75% { clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%); }
+
+    100% {clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0); }
+}
+
+
+/** Propiedades copartidas **/
+
+#mail_r, .code { padding: 10px;}
+
+#correo, #contra { padding: 12px; }
+
+#contra, #btn-ag, #mail_r, #btn_re,  #correo, #c, #o, #d, #e, #btn_va {
+    border-radius: 10px;
+}
+
+#mail_r, #btn_re, #contra, #correo, #btn-ag, #btn_va {
+    font-size: 15px;
+}
+
+.modal_, .modal_1 { background-color: white; }
+
+#btn_co { padding: 16px 30px; }
+
+.p3, #btn_co  { font-size: 18px; }
+
+.modal_, #btn_co { border-radius: 20px; }
