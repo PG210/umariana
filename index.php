@@ -16,6 +16,7 @@
     <!-- End layout styles -->
     <link rel="shortcut icon" href="./assets/images/l.png" />
     <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/b820e1a70c.js" crossorigin="anonymous"></script>
 </head>
 
@@ -47,10 +48,10 @@
                                 </div>
                             </form>
                             <div class="font-weight-light">
-                                <a class="mt-1 btn btn_m" data-bs-toggle="modal" data-bs-target="#modalRecu" data-bs-dismiss="modal" onclick="toast.hide(); toast2.hide();">
+                                <a class="mt-1 btn btn_m" data-bs-toggle="modal" data-bs-target="#modalRecu" data-bs-dismiss="modal">
                                     <p>¿Olvidaste tu contraseña?</p>
                                 </a>
-                            </div>
+                             </div>
                             <div class="font-weight-light">¿No tienes una cuenta? <a href="./registrarusu.php" class="text-primary"><strong>Regístrate</strong></a>
                             </div>
                         </div>
@@ -72,10 +73,10 @@
             <div class="modal fade" id="modalRecu" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="modalrecu" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content modal_">
-                        <form class=" needs-validation2" novalidate method="post" action='./php/i.php'>
+                        <form class=" needs-validation2" id="formrecuperar" method="post">
                             <div class="modal-header">
                                 <h4 class="modal-title" id="modalrecu"><b>Recuperar Contraseña</b></h4>
-                                <button type="button" class="btn-close btn" data-bs-dismiss="modal" aria-label="Close" onclick="document.getElementById('mail_r').value=''; toast3.hide();"></button>
+                                <button type="button" class="btn-close btn" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <br>
@@ -84,7 +85,7 @@
                                         <img src="./assets/images/recuperar_contraseña.png" alt="logo" id="img_re" />
                                     </div>
                                     <div class="col-7 mb-2 c1 c2">
-                                        <input type="email" class="form-control form-control-lg" pattern=".+@umariana\.edu.co" id="mail_r" name="emailrecu" required placeholder="correo@umariana.edu.co">
+                                        <input type="email" class="form-control form-control-lg" id="mail_r" name="emailrecu" required placeholder="correo@umariana.edu.co">
                                         <div class="invalid-feedback">
                                             Ingrese su correo electrónico institucional.
                                         </div>
@@ -120,7 +121,8 @@
     <!-- inject:js -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
     <!--<script src="js/index.js"></script>-->
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="./js/recuperar.js"></script>
     <!-- endinject -->
 </body>
 

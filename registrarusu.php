@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +16,7 @@
     <link rel="stylesheet" href="./assets/css/toast.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="./assets/images/l.png" />
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/b820e1a70c.js" crossorigin="anonymous"></script>
 </head>
@@ -26,10 +28,10 @@
                 <div class="row flex-grow">
                     <div class="col-4 mx-auto card_wh1">
                         <div class="auth-form-light p-4 text-center align-items-center card_wh">
-                            <form class="p-3 text-center align-items-center needs-validation"  method="post" id="frm_r" action="" novalidate>
+                            <form class="p-3 text-center align-items-center needs-validation"  method="post" id="loginform" name="loginform" action="" novalidate>
                              <h1> <?php 
                                     include ('./php/conexion.php');
-                                    include('./php/registrodb.php');
+                                   // include('./php/registrodb.php');
                                     ?></h1>
                              <div class="brand-logo">
                                     <img src="./assets/images/lg.png" id="img_lg">
@@ -54,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-
+                 <div id="tabla2"></div>
                 <!-- Email que se enviara al index en caso de que el usuario ya esté registrado -->
                 <form class="p-3 text-center align-items-center visually-hidden" action='./' method="post" id="frm_email">
                     <div class="form-group">
@@ -116,6 +118,7 @@
             </div>
         </div>
         <!-- content-wrapper ends -->
+        <?php include('./php/toast/msj.php'); ?>
     </div>
     <!-- page-body-wrapper ends -->
     </div>
@@ -126,9 +129,12 @@
     <!-- Plugin js for this page -->
     <!-- End plugin js for this page -->
     <!-- inject:js -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>-->
     <!--<script src="./js/registro.js"></script>-->
     <script src="./js/bootstrap.js"></script>
+    <script src="./js/registro.js"></script>
     <!-- endinject -->
 </body>
 
