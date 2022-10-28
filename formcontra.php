@@ -34,12 +34,13 @@ if (isset($_GET["correo"])) {
                 <div class="row flex-grow">
                     <div class="col-4 mx-auto card_wh1">
                         <div class="auth-form-light p-5 text-center align-items-center card_wh">
-                            <form class=" needs-validation" id="formurecuperacion" name="formurecuperacion" method="post">
+                            <form class=" needs-validation" id="formurecuperacion" name="formurecuperacion" method="POST">
                                 <div class="brand-logo">
                                     <img src="./assets/images/lg.png" id="img_lg">
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-lg" pattern=".+@umariana\.edu.co" name="correorecu" id="correorecu" required placeholder="correo@umariana.edu.co" value="<?php echo $corvar; ?>" disabled>
+                                    <input type="email" class="form-control form-control-lg" name="correorecu" id="correorecu" value="<?php echo $corvar; ?>" hidden>
+                                     <label><h5><?php echo $corvar; ?></h5></label>
                                     <div class="invalid-feedback">
                                         Ingrese su correo electrónico institucional.
                                     </div>
@@ -75,6 +76,7 @@ if (isset($_GET["correo"])) {
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
     <!--<script src="js/index.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="./js/cambiopass.js"></script>
     <!-- endinject -->
 </body>
 
