@@ -13,7 +13,7 @@
         //echo 'Registrar datos';
         //$queryUpdate =$conexion->query( "UPDATE persona SET contrasenia='$pass' WHERE persona.email='$usu'");
         $cod = rand(1000, 2000); //genera el radom
-        $queryUpdate =$conexion->query( "UPDATE persona SET confir='$cod', auxpass='$pass', intento='3' WHERE persona.email='$usu'");
+        $queryUpdate =$conexion->query( "UPDATE persona SET confir='$cod', auxpass='$pass' WHERE persona.email='$usu'");
         email($usu, $cod); //envia los correos de registro
         echo json_encode(['success' =>1]);
          
