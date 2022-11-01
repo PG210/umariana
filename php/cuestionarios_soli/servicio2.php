@@ -36,7 +36,7 @@
     <!-- Información necesaria si la solicitud no es una rueda de prensa o agenda de medios -->
     <div class="row" id="info_desarrollo1">
         <div class="col-9">
-            <textarea class="form-control" name="info_desarrollo" id="info_d" rows="6" placeholder="nada" style="font-size: 15px;"></textarea>
+            <textarea class="form-control" name="desarrollo" id="info_d" rows="6" placeholder="nada" style="font-size: 15px;"></textarea>
         </div>
         <div class="col-3">
             <div class="row">
@@ -61,7 +61,7 @@
     <!-- Información necesaria si la solicitud es una rueda de prensa o agenda de medios -->
     <div class="row" id="info_desarrollo2">
         <div class="col-6">
-            <textarea class="form-control" name="info_desarrollo" rows="8" placeholder="Detallar la necesidad para la visita a medios de comunicación externos." style="font-size: 15px;"></textarea>
+            <textarea class="form-control" name="desarrollonuevo" rows="8" placeholder="Detallar la necesidad para la visita a medios de comunicación externos." style="font-size: 15px;"></textarea>
         </div>
         <div class="col-4">
             <textarea class="form-control" name="asistentes" rows="8" placeholder="Asistentes" style="font-size: 14px;"></textarea>

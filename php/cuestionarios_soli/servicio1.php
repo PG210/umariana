@@ -72,6 +72,7 @@
             <div class="d-flex col-4">
                 <!--<input class="form-control" type="file" id="anexos" name="anexos">-->
                 <input class="form-control" name="subir_archivo" type="file" />
+                <input class="form-control" name="formuno" type="number" value="1" hidden/>
             </div>
         </div>
     </div>

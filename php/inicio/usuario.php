@@ -146,5 +146,6 @@ if(isset($_SESSION['correo'])){
 
 
     <?php include('../lib/footer.php') ?>
+ </body>
 
 <!---end plantilla-->
