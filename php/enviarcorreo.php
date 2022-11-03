@@ -19,6 +19,7 @@ function correoenvio($correo, $nomsolicitud, $nomservicio, $infodes, $publicodir
     $cor->setFrom("solicitudunimar@gmail.com");
     $cor->addAddress("$correo");
     $cor->Subject="Solicitudes";
+    $cor->msgHTML("<h2 style='text-align:center;'>SOLICITUDES APP</h2>");
     if($archivo != " "){
         $cor->msgHTML("<h2 style='text-align:center;'>SOLICITUDES APP</h2>
         <h4>SOLICITUD DE: $nomsolicitud </h4>

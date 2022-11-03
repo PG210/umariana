@@ -13,11 +13,7 @@ $respuesta = $conexion->query("SELECT solicitud.fecha_evento AS fec, solicitud.a
                 JOIN persona ON solicitud.id_solicitante = persona.id_persona
                 JOIN persona AS encargado ON solicitud.id_encargado = encargado.id_persona
                 WHERE solicitud.id_estado_solicitud = 1");
-$datos=$respuesta->fetch_object();
-$t= (array) $datos;
-$dat = COUNT($t);
-//var_dump($t);
-
+/*$datos=$respuesta->fetch_object();*/
 echo '<table class="table table-bordered">
 <thead>
     <tr>
@@ -28,27 +24,27 @@ echo '<table class="table table-bordered">
     </tr>
 </thead>
 <tbody>';
-for($i=0;$i<$dat;$i++) {
-        echo '<tr>
-        <td>'.$t['fec'].'</td>
-        <td>'.$t['archivo'].'</td>
-        <td>'.$t['infodes'].'</td>
-        <td>'.$t['publicodir'].'</td>
-        <td>'.$t['desanexo'].'</td>
-        <td>'.$t['nomsolicitud'].'</td>
-        <td>'.$t['nomservicio'].'</td>
-        <td>'.$t['nombresol'].'</td>
-        <td>'.$t['email'].'</td>
-        <td>'.$t['emailencargado'].'</td>
-        <td>'.$t['fecha_evento'].'</td>
-        <td>'.$t['fechas_evento'].'</td>
-        <td>'.$t['lugar'].'</td>
-        <td>'.$t['reque'].'</td>
-        <td>'.$t['asistentes'].'</td>
-        <td>'.$t['hora'].'</td>
-        </tr>';
-    
-}
+while ($datos = mysqli_fetch_object($respuesta)) {
+    echo '<tr>
+    <td>'.$datos->fec.'</td>
+    <td>'.$datos->archivo.'</td>
+    <td>'.$datos->infodes.'</td>
+    <td>'.$datos->publicodir.'</td>
+    <td>'.$datos->desanexo.'</td>
+    <td>'.$datos->nomsolicitud.'</td>
+    <td>'.$datos->nomservicio.'</td>
+    <td>'.$datos->nombresol.'</td>
+    <td>'.$datos->email.'</td>
+    <td>'.$datos->emailencargado.'</td>
+    <td>'.$datos->fecha_evento.'</td>
+    <td>'.$datos->fechas_evento.'</td>
+    <td>'.$datos->lugar.'</td>
+    <td>'.$datos->reque.'</td>
+    <td>'.$datos->asistentes.'</td>
+    <td>'.$datos->hora.'</td>
+    </tr>';
+ }
 echo '</tbody>
 </table>';
 ?>
+
