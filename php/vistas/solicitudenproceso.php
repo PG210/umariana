@@ -12,9 +12,7 @@ $respuesta = $conexion->query("SELECT solicitud.id_solicitud AS id, solicitud.fe
                 JOIN tipo_servicio ON tipo_solicitud.id_tipo_servicio = tipo_servicio.id_tipo_servicio
                 JOIN persona ON solicitud.id_solicitante = persona.id_persona
                 JOIN persona AS encargado ON solicitud.id_encargado = encargado.id_persona
-                WHERE solicitud.id_estado_solicitud = 1 OR solicitud.id_estado_solicitud = 3");
-
-
+                WHERE solicitud.id_estado_solicitud = 2");
 /*$datos=$respuesta->fetch_object();*/
 $conta =1;
 
@@ -26,7 +24,7 @@ echo '<div class="table-responsive">
       <th scope="col">Solicitud</th>
       <th scope="col">Servicio</th>
       <th scope="col">Fecha</th>
-      <th scope="col" colspan="3">Acción</th>
+      <th scope="col" colspan="4">Acción</th>
     </tr>
   </thead>
   <tbody id="tabla1">';
@@ -94,92 +92,43 @@ echo '<div class="table-responsive">
            
         </td>
         <td>
-        <!-- Button trigger modal -->
-          <a type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop'.$datos->id.'">
-            Comentario
-          </a>
-
-          <!-- Modal -->
-          <div class="modal fade" id="staticBackdrop'.$datos->id.'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="staticBackdropLabel1">Agregar Comentarios</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form  method="POST" action="http://localhost/umariana/php/vistas/enviarcomentario.php">
-                    <div class="mb-3">
-                      <textarea class="form-control" id="textocomen" name="textocomen" rows="3"></textarea>
-                    </div>
-                    <div class="mb-3">
-                    <!--radio-->
-                          <div class="form-check">
-                          <input class="form-check-input" type="radio" name="motivo" value="1" id="flexRadioDefault1">
-                          <label class="form-check-label" for="flexRadioDefault1">
-                            Edición
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="motivo" value="2" id="flexRadioDefault2" checked>
-                          <label class="form-check-label" for="flexRadioDefault2">
-                            Cancelación
-                          </label>
-                        </div>
-                        <!-- end radio-->
-                    </div>
-                    <input type="email" name="correo" id="correo" value="'.$datos->email.'" hidden>
-                    <input type="text" name="iden" id="iden" value="'.$datos->id.'" hidden>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Salir</button>
-                      <button type="submit" class="btn btn-info">Enviar</button>
-                    </div>
-                  </form>
-                </div>
-               
-              </div>
-            </div>
-          </div>
-        </td>
-        <td>
-        <!---modal seleccionar revisor-->
-        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#encargado'.$datos->id.'">
-          Asignar
-        </button>
+        <!--modal-->
+        <a type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop'.$datos->id.'">
+          Comentario
+        </a>
 
         <!-- Modal -->
-        <div class="modal fade" id="encargado'.$datos->id.'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="staticBackdrop'.$datos->id.'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel1">Agregar comentario al encargado</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form method="POST" action="http://localhost/umariana/php/vistas/asignarencargado.php">
-                <!---elegir revisor-->';
-                echo '<select class="form-select" aria-label="Default select example" name="encargado" id="encargado">
-                      <option selected>Elegir</option>';
-                      $personas = $conexion->query("SELECT persona.id_persona AS idper, persona.nombres
-                                  from persona
-                                  WHERE persona.id_rol = 3 AND persona.nombres != 'Default'");
-                        while ($per = mysqli_fetch_object($personas)) {
-                            echo '<option value="'.$per->idper.'">'.$per->nombres.'</option>';
-                        }
-                echo '
-                </select>
-                
-                <input value="'.$datos->id.'" name="idsol" id="idsol" hidden>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Salir</button>
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
+                  <form  method="POST" action="http://localhost/umariana/php/vistas/comentarioencargado.php">
+                  <div class="mb-3">
+                    <textarea class="form-control" id="comencargado" name="comencargado" rows="3"></textarea>
+                  </div>
+                  <div class="mb-3">
+                  </div>
+                  <input type="text" name="idsolicitud" id="idsolicitud" value="'.$datos->id.'" hidden>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Salir</button>
+                    <button type="submit" class="btn btn-info">Enviar</button>
+                  </div>
                 </form>
-              <!--end revisor-->
               </div>
+            
             </div>
           </div>
         </div>
-        <!--- end seleccionar editor-->
+        <!--end modal-->
+        </td>
+        <td>
+         <button type="button" class="btn btn-warning" onClick="recordar('.$datos->id.')">Recordar</button></td>
+         <td>
+         <button type="button" class="btn btn-danger" onClick="cancelar('.$datos->id.')">Cancelar</button>
         </td>
         </tr>';
  }

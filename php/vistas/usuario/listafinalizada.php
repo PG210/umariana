@@ -1,20 +1,21 @@
 <?php 
-
+if(isset($_GET["v"])){
+$id= $_GET["v"];
 include '../conexion.php';
 //retornar información
 $respuesta = $conexion->query("SELECT solicitud.id_solicitud AS id, solicitud.fecha_evento AS fec, solicitud.anexos AS archivo, solicitud.informacion_desarrollo AS infodes, solicitud.publico_objetivo AS publicodir, 
                 solicitud.descripcion_anexo AS desanexo, tipo_solicitud.nombre_tipo AS nomsolicitud, tipo_Servicio.nombre_servicio AS nomservicio,
                 persona.nombres AS nombresol, persona.email, encargado.email AS emailencargado,
                 solicitud.fecha_evento, solicitud.fechas_evento, solicitud.lugar_evento AS lugar, solicitud.requerimientos AS reque,
-                solicitud.asistentes, solicitud.hora_evento AS hora, solicitud.motivo_cancelacion, solicitud.motivo_edicion
+                solicitud.asistentes, solicitud.hora_evento AS hora, solicitud.motivo_cancelacion, solicitud.motivo_edicion,
+                tipo_estado.porcentaje, solicitud.productofinal
                 from solicitud 
                 JOIN tipo_solicitud ON solicitud.id_tipo_solicitud = tipo_solicitud.id_tipo_solicitud 
                 JOIN tipo_servicio ON tipo_solicitud.id_tipo_servicio = tipo_servicio.id_tipo_servicio
                 JOIN persona ON solicitud.id_solicitante = persona.id_persona
                 JOIN persona AS encargado ON solicitud.id_encargado = encargado.id_persona
-                WHERE solicitud.id_estado_solicitud = 1 OR solicitud.id_estado_solicitud = 3");
-
-
+                JOIN tipo_estado ON solicitud.id_estado_solicitud = tipo_estado.id_tipo_estado
+                WHERE  persona.id_persona='$id' AND solicitud.id_estado_solicitud = 7");
 /*$datos=$respuesta->fetch_object();*/
 $conta =1;
 
@@ -26,6 +27,7 @@ echo '<div class="table-responsive">
       <th scope="col">Solicitud</th>
       <th scope="col">Servicio</th>
       <th scope="col">Fecha</th>
+      <th scope="col">Estado</th>
       <th scope="col" colspan="3">Acción</th>
     </tr>
   </thead>
@@ -36,6 +38,11 @@ echo '<div class="table-responsive">
         <td>'.$datos->nomsolicitud.'</td>
         <td>'.$datos->nomservicio.'</td>
         <td>'.$datos->fec.'</td>
+        <td> 
+        <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width:'.$datos->porcentaje.'%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        </div><span style="font-size:13px;">'.$datos->porcentaje.'%</span>
+        </td>
         <td><!--modal detalle-->
         <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal1'.$datos->id.'">
@@ -43,7 +50,7 @@ echo '<div class="table-responsive">
             </button>
             <!-- Modal -->
             <div class="modal fade" id="modal1'.$datos->id.'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-scrollable">
+              <div class="modal-dialog modal-lg modal-dialog-scrollable ">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Descripción De Solicitud</h1>
@@ -91,96 +98,23 @@ echo '<div class="table-responsive">
               </div>
             </div>
             <!--end modal descripcion-->
-           
         </td>
         <td>
-        <!-- Button trigger modal -->
-          <a type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop'.$datos->id.'">
-            Comentario
-          </a>
-
-          <!-- Modal -->
-          <div class="modal fade" id="staticBackdrop'.$datos->id.'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="staticBackdropLabel1">Agregar Comentarios</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form  method="POST" action="http://localhost/umariana/php/vistas/enviarcomentario.php">
-                    <div class="mb-3">
-                      <textarea class="form-control" id="textocomen" name="textocomen" rows="3"></textarea>
-                    </div>
-                    <div class="mb-3">
-                    <!--radio-->
-                          <div class="form-check">
-                          <input class="form-check-input" type="radio" name="motivo" value="1" id="flexRadioDefault1">
-                          <label class="form-check-label" for="flexRadioDefault1">
-                            Edición
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="motivo" value="2" id="flexRadioDefault2" checked>
-                          <label class="form-check-label" for="flexRadioDefault2">
-                            Cancelación
-                          </label>
-                        </div>
-                        <!-- end radio-->
-                    </div>
-                    <input type="email" name="correo" id="correo" value="'.$datos->email.'" hidden>
-                    <input type="text" name="iden" id="iden" value="'.$datos->id.'" hidden>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Salir</button>
-                      <button type="submit" class="btn btn-info">Enviar</button>
-                    </div>
-                  </form>
-                </div>
-               
-              </div>
-            </div>
-          </div>
-        </td>
-        <td>
-        <!---modal seleccionar revisor-->
-        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#encargado'.$datos->id.'">
-          Asignar
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="encargado'.$datos->id.'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form method="POST" action="http://localhost/umariana/php/vistas/asignarencargado.php">
-                <!---elegir revisor-->';
-                echo '<select class="form-select" aria-label="Default select example" name="encargado" id="encargado">
-                      <option selected>Elegir</option>';
-                      $personas = $conexion->query("SELECT persona.id_persona AS idper, persona.nombres
-                                  from persona
-                                  WHERE persona.id_rol = 3 AND persona.nombres != 'Default'");
-                        while ($per = mysqli_fetch_object($personas)) {
-                            echo '<option value="'.$per->idper.'">'.$per->nombres.'</option>';
-                        }
-                echo '
-                </select>
+         <!--compartir-->
+               <!--facebook-->
+               <a target="_blank" href="http://www.facebook.com/sharer.php?u=http://localhost/umariana/php/vistas/'.$datos->archivo.'">
+               <svg style="font-size:25px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+               <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                </svg>
+               </a> &nbsp;
+                <!--end facebook-->
+                <a href="https://twitter.com/intent/tweet?text=Producto%20a%20final%20de%20la%20plataforma%20solicitudes&url= http://localhost/umariana/php/vistas/'.$datos->archivo.'&hashtags=UNIMAR" target="_blank">
+                <svg style="font-size:25px" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                </svg>
+                </a>
                 
-                <input value="'.$datos->id.'" name="idsol" id="idsol" hidden>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Salir</button>
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-                </form>
-              <!--end revisor-->
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--- end seleccionar editor-->
-        </td>
+        <!--end compartir-->
         </tr>';
  }
 echo '
@@ -189,5 +123,5 @@ echo '
 </table>
 </div>
 ';
-
+}
 ?>

@@ -83,16 +83,15 @@
           id_encargado, fecha_evento, fechas_evento, lugar_evento, hora_evento, informacion_desarrollo,
           publico_objetivo, anexos, descripcion_anexo, requerimientos,
           asistentes, id_estado_solicitud, motivo_cancelacion, motivo_edicion ) 
-          VALUES('$fec_actu', '$tipo', '$usu', '12', '$fecha_evento', '$fechas', ' ', ' ', '$infodesformu3', ' ', ' ', ' ', ' ', '$asistentes', '1', ' ', ' ') ");
+          VALUES('$fec_actu', '$tipo', '$usu', '14', '$fecha_evento', '$fechas', ' ', ' ', '$infodesformu3', ' ', ' ', ' ', ' ', '$asistentes', '1', ' ', ' ') ");
             
          }
      }
   
-     
     //una vez insertado enviar correo al usuario encargado
-     $idsolicitud = mysqli_insert_id($conexion); //devuelve el id del ultimo registro ingresado a la tabla 
+    // $idsolicitud = mysqli_insert_id($conexion); //devuelve el id del ultimo registro ingresado a la tabla 
     //consultar los datos para sacar la info
-     $info = $conexion->query("SELECT solicitud.fecha_evento AS fec, solicitud.anexos AS archivo, solicitud.informacion_desarrollo AS infodes, solicitud.publico_objetivo AS publicodir, 
+    /* $info = $conexion->query("SELECT solicitud.fecha_evento AS fec, solicitud.anexos AS archivo, solicitud.informacion_desarrollo AS infodes, solicitud.publico_objetivo AS publicodir, 
                                       solicitud.descripcion_anexo AS desanexo, tipo_solicitud.nombre_tipo AS nomsolicitud, tipo_Servicio.nombre_servicio AS nomservicio,
                                       persona.nombres AS nombresol, persona.email, encargado.email AS emailencargado,
                                       solicitud.fecha_evento, solicitud.fechas_evento, solicitud.lugar_evento AS lugar, solicitud.requerimientos AS reque,
@@ -103,13 +102,13 @@
                                JOIN persona ON solicitud.id_solicitante = persona.id_persona
                                JOIN persona AS encargado ON solicitud.id_encargado = encargado.id_persona
                                WHERE solicitud.id_solicitud = '$idsolicitud'");
-     $datoscon=$info->fetch_object();
+     $datoscon=$info->fetch_object();*/
      //email('pedrocuasquer21095@gmail.com', '1234');
 
      //$cor=$datoscon->$emailencargado;
-      correoenvio($datoscon->emailencargado, $datoscon->nomsolicitud, $datoscon->nomservicio, $datoscon->infodes, $datoscon->publicodir, 
+    /* correoenvio($datoscon->emailencargado, $datoscon->nomsolicitud, $datoscon->nomservicio, $datoscon->infodes, $datoscon->publicodir, 
                    $datoscon->nombresol, $datoscon->archivo, $datoscon->fecha_evento, $datoscon->fechas_evento, $datoscon->lugar, $datoscon->reque, $datoscon->asistentes, $datoscon->hora);
-     
+     */
       header("location: http://localhost/umariana/php/inicio/usuario.php?msj=1");
      exit();
 

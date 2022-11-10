@@ -3,7 +3,6 @@
 include('../conexion.php');
 include('../lib/header.php'); ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-
 <title>Dependencia</title>
 <script type="text/javascript">
         window.history.forward();
@@ -32,6 +31,7 @@ if(isset($_SESSION['correo'])){
                     <span class="mdi mdi-menu"></span>
                 </button>
 
+               
                 <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
                     <span class="mdi mdi-menu"></span>
                 </button>
@@ -74,6 +74,7 @@ if(isset($_SESSION['correo'])){
                         <div class="collapse" id="ui-basic">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item"> <a class="nav-link" href="solenvia.php?v=<?php echo $datos->id_persona ?>" style="font-size: 13px;">En proceso</a></li>
+                                
                                 <li class="nav-item"> <a class="nav-link" href="solfinalizadas.php?v=<?php echo $datos->id_persona ?>" style="font-size: 13px;">Finalizadas</a></li>
                                 <li class="nav-item"> <a class="nav-link" href="solcanceladas.php?v=<?php echo $datos->id_persona ?>" style="font-size: 13px;">Canceladas</a></li> 
                             </ul>
@@ -85,54 +86,27 @@ if(isset($_SESSION['correo'])){
             <div class="main-panel">
                 <div class="content-wrapper">
                     <div class="page-header">
-                        <a href="usuario.php" style="text-decoration: none;">
+                    <a href="usuario.php" style="text-decoration: none;">
                         <h1 class="page-title">
                             <span class="page-title-icon text-white me-2" style="background: linear-gradient(117deg, rgba(0,42,155,1) 0%, rgba(0,104,255,1) 100%);">
                                 <i class="mdi mdi-home"></i>
                             </span><b style="font-size: 20px;">Inicio</b>
-                        </h1></a>
+                        </h1>
+                      </a>
                     </div>
                     <div class="row">
-                        <div class="col-12 grid-margin stretch-card" style="min-width: min-content;">
+                        <div class="col-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <?php
-                                      if (isset($_GET["msj"])) {
-                                             echo "<div class=\"alert alert-warning alert-dismissible fade show\" role=\"alert\">
-                                                <strong>Su solicitud ha sido enviada!</strong> Dentro de las proximas horas sera atendida.
-                                                <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Close\"></button>
-                                                </div>";
-                                      }
-                                    ?>
-                                    
-                                    <form enctype="multipart/form-data" action="../vistas/crearsolicitud.php" method="POST">
-                                        <div class="page-header">
-                                            <h2 class="page-title" style="margin-right: 10px;"><b>Diligenciar Solicitud</b></h2>
-                                            <nav aria-label="breadcrumb">
-                                                <select class="form-select form-control" name="servicio" onchange="determinarVistaTipoForm(this.value);" style="width: 300px; font-size: 15px;">
-                                                    <option value="0" selected>Determinar el servicio</option>
-                                                    <?php
-                                                    //crear una variable con la sentencia SQL
-                                                    $sql = "SELECT * FROM tipo_servicio";
-                                                    // crear la variable para ejecutar la consulta
-                                                    $consulta = mysqli_query($conexion, $sql);
-                                                    while ($campos = mysqli_fetch_array($consulta)) { ?>
-                                                        <option value="<?= $campos['id_tipo_servicio']; ?>"><?= $campos['nombre_servicio']; ?></option>
-                                                    <?php } ?>
-                                                </select>
-                                            </nav>
-                                        </div>
-                                        <!--enviar la id del usuario logeado-->
-                                        <input type="text" id="usu" name="usu" value="<?php echo $datos->id_persona ?>" hidden>
-                                        <!--end usu-->
-                                        <div id="info_serv_1">
-                                            <?php include('../cuestionarios_soli/servicio1.php'); ?>
-                                        </div>
-
-                                        <div id="info_serv_2">
-                                            <?php include('../cuestionarios_soli/servicio2.php'); ?>
-                                        </div>
-                                    </form>
+                                  <!---card-->
+                                  <div class="tab-content" id="pills-tabContent">
+                                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                            <div class="row">
+                                                 <?php include('../../php/vistas/usuario/listasol.php') ?>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                  <!---end card-->
                                 </div>
                             </div>
                         </div>
@@ -141,8 +115,8 @@ if(isset($_SESSION['correo'])){
             </div>
         </div>
     </div>
-    
     <script src="../../js/usuario.js"></script>
+    <script src="../../js/aceptar.js"></script>
     <?php include('../lib/footer.php') ?>
  </body>
 <!---end plantilla-->

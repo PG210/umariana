@@ -18,9 +18,14 @@
     <!-- FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/b820e1a70c.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        window.history.forward();
+        function sinVueltaAtras(){ window.history.forward(); }
+     </script>
 </head>
 
-<body>
+<body onload="sinVueltaAtras();" onpageshow="if (event.persisted) sinVueltaAtras();" onunload="">
+
     <!--sesiones-->
     <?php session_start();?>
     <?php
@@ -143,6 +148,7 @@
     <script src="./js/recuperar.js"></script>
     <script src="./js/inicioses.js"></script>
     <!-- endinject -->
+      
 </body>
 
 </html>

@@ -2,9 +2,14 @@
 include('../conexion.php');
 include('../lib/header.php'); ?>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-<title>Dependencia</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+<title>Director</title>
 </head>
-<body>
+<script type="text/javascript">
+        window.history.forward();
+        function sinVueltaAtras(){ window.history.forward(); }
+</script>
+<body onload="sinVueltaAtras();" onpageshow="if (event.persisted) sinVueltaAtras();" onunload=""> 
 
     <?php session_start();
 
@@ -20,21 +25,13 @@ include('../lib/header.php'); ?>
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo" href=""><img src="../../assets/images/logo.svg" alt="logo" /></a>
+            <a class="navbar-brand brand-logo" href="https://www.umariana.edu.co/" target="_blank"><img src="../../assets/images/lg.png" style="width: 140px; height:auto;" alt="logo unimar"></a>
                 <a class="navbar-brand brand-logo-mini" href=""><img src="../../assets/images/logo-mini.svg" alt="logo" /></a>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-stretch">
                 <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                     <span class="mdi mdi-menu"></span>
                 </button>
-
-                <ul class="navbar-nav navbar-nav-right">
-                    <li class="nav-item nav-logout d-none d-lg-block" style="margin-left: -18px; margin-right: -20px;">
-                        <a class="nav-link btn" onclick="abrirNuevaPestaña('https://www.umariana.edu.co/')">
-                            <img src="../../assets/images/lg.png" style="width: 140px;" alt="logo unimar">
-                        </a>
-                    </li>
-                </ul>
                 <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
                     <span class="mdi mdi-menu"></span>
                 </button>
@@ -43,37 +40,7 @@ include('../lib/header.php'); ?>
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <!-- partial:partials/_sidebar.html -->
-            <nav class="sidebar sidebar-offcanvas" id="sidebar">
-                <ul class="nav">
-                    <li class="nav-item nav-profile li_logout" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Salir">
-                        <a href="logout.php" class="nav-link a_logout">
-                            <div class="nav-profile-image">
-                                <img src="../../assets/images/faces/face1.jpg" alt="profile">
-                                <span class="login-status online"></span>
-                                <!--change to offline or busy as needed-->
-                            </div>
-                            <div class="nav-profile-text d-flex flex-column">
-                                <span class="mb-2"><b><?php echo $datos->nombres ?></b></span>
-                                <span class="text-secondary text-small"><?php echo $datos->cargo ?></span>
-                            </div>
-                            <i class="fa-solid fa-person-walking-arrow-right menu-icon i_logout"></i>
-                        </a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="dashb_usuario.php">
-                            <span class="menu-title text-primary" style="font-size: 16px;"><b>Solicitudes</b></span>
-                            <i class="mdi mdi-email menu-icon text-primary"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../pages/charts/chartjs.html">
-                            <span class="menu-title" style="font-size: 14px;"><b>Estadisticas</b></span>
-                            <i class="mdi mdi-chart-bar menu-icon"></i>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+           <?php include('app/nav.php') ?>
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
@@ -93,6 +60,9 @@ include('../lib/header.php'); ?>
                                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">En proceso</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-confirmar-tab" data-bs-toggle="pill" data-bs-target="#pills-confirmar" type="button" role="tab" aria-controls="pills-confirmar" aria-selected="false">Confirmación</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Finalizadas</button>
                                 </li>
                             </ul>
@@ -100,27 +70,58 @@ include('../lib/header.php'); ?>
                         <!--end nav-->
                     </div>
                     <div class="row">
-                        <div class="col-12 grid-margin stretch-card" style="min-width: min-content;">
+                        <div class="col-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
                                    <!---información-->
                                    <div class="tab-content" id="pills-tabContent">
                                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                                             <div class="row">
+                                            <?php
+                                                if (isset($_GET["var"])) {
+                                                    $men = $_GET["var"];
+                                                    if($men == 1){
+                                                        echo "<div class=\"alert alert-warning alert-dismissible fade show\" role=\"alert\">
+                                                        <strong>Comentario enviado!</strong>
+                                                        <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Close\"></button>
+                                                        </div>";
+                                                    }else{
+                                                        if($men == 2){
+                                                            echo "<div class=\"alert alert-info alert-dismissible fade show\" role=\"alert\">
+                                                                <strong>Encargado agregado de manera exitosa!</strong>
+                                                                <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Close\"></button>
+                                                                </div>";
+
+                                                        }else{
+                                                            echo "<div class=\"alert alert-danger alert-dismissible fade show\" role=\"alert\">
+                                                            <strong>Falló el envio!</strong>
+                                                            <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Close\"></button>
+                                                            </div>";
+                                                        }
+                                                      
+                                                    }
+                                                   
+                                                }
+                                                ?>
                                                 <?php include('../vistas/solicitudesenviadas.php'); ?>
                                             </div>
                                         </div>
 
+      
                                         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                                             <div class="row">
-                                            <h1>en proceso</h1>
-
+                                            <?php include('../vistas/solicitudenproceso.php'); ?>
                                             </div>
                                         </div>
-
+                                        <div class="tab-pane fade" id="pills-confirmar" role="tabpanel" aria-labelledby="pills-confirmar-tab">
+                                            <div class="row">
+                                            <?php include('../vistas/confirmacion.php'); ?>
+                                            </div>
+                                        </div>
+                                        
                                         <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                                             <div class="row">
-                                            <h1>Finalizadas</h1>
+                                            <?php include('../vistas/solicitudfinalizada.php'); ?>
                                             </div>
                                         </div>
                                     </div>
@@ -151,7 +152,12 @@ include('../lib/header.php'); ?>
             font-weight: bolder;
         }
     </style>
+          <?php include('../lib/footer.php') ?>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <?php include('../lib/footer.php') ?>
+
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+      <script src="../../js/aceptar.js"></script>
+    
     </body>
 <!--end plantilla-->
